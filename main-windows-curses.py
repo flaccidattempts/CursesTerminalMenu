@@ -19,7 +19,8 @@ class CursesMenu(object):
 
         #set up color pair for highlighted option
         curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
-        self.hilite_color = curses.color_pair(1)
+        #when using classes you have to self identify the reference variables
+        self.highlight_color = curses.color_pair(1)
         self.normal_color = curses.A_NORMAL
 
     def prompt_selection(self, parent=None):
@@ -41,13 +42,13 @@ class CursesMenu(object):
             self._draw_title()
             for option in range(option_count):
                 if self.selected_option == option:
-                    self._draw_option(option, self.hilite_color)
+                    self._draw_option(option, self.highlight_color)
                 else:
                     self._draw_option(option, self.normal_color)
 
             if self.selected_option == option_count:
                 self.screen.addstr(5 + option_count, 4, "{:2} - {}".format(option_count+1,
-                    lastoption), self.hilite_color)
+                    lastoption), self.highlight_color)
             else:
                 self.screen.addstr(5 + option_count, 4, "{:2} - {}".format(option_count+1,
                     lastoption), self.normal_color)
@@ -105,16 +106,16 @@ class CursesMenu(object):
 
 menu = {'title' : 'Curses Menu',
         'type' : 'menu',
-        'subtitle' : 'A Curses menu in Python'}
+        'subtitle' : 'This is the description of the menu'}
 
-option_1 = {'title' : 'Hello World',
+option_1 = {'title' : 'Hello Curses World',
             'type' : 'command',
-            'command' : 'echo Hello World!'}
+            'command' : 'echo Hello CursesWorld!'}
 
 menu['options'] = [option_1]
 
-m = CursesMenu(menu)
-selected_action = m.display()
+main_menu = CursesMenu(menu)
+selected_action = main_menu.display()
 
 if selected_action['type'] != 'exitmenu':
     os.system(selected_action['command'])
